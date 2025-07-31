@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Render email HTML
-        const emailHtml = render(
+        const emailHtml = await render(
             EmailTemplate({
                 content: template.content,
                 variables: { ...template.variables, ...variables }

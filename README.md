@@ -16,6 +16,16 @@ A comprehensive Next.js 14 application for building and managing email templates
 - **State Management**: Zustand for global state
 - **Data Fetching**: TanStack Query (React Query v4)
 
+## 📸 Screenshots
+
+### Dashboard Overview
+![Dashboard](./dashboard.png)
+*Clean and intuitive dashboard interface for managing email templates*
+
+### Visual Email Builder
+![Email Builder](./editor.png)
+*Professional drag-and-drop email builder with real-time preview*
+
 ## 🛠 Tech Stack
 
 - **Framework**: Next.js 14 with App Router

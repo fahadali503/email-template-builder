@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { Sidebar, SidebarToggle } from '@/components/ui/sidebar'
 
 export default function UserLayout({
@@ -7,6 +8,19 @@ export default function UserLayout({
 }: {
     children: React.ReactNode
 }) {
+    const pathname = usePathname()
+    const isBuilderPage = pathname?.includes('/builder')
+
+    // For builder page, use minimal layout to allow full height
+    if (isBuilderPage) {
+        return (
+            <div className="h-screen w-full bg-gray-50">
+                {children}
+            </div>
+        )
+    }
+
+    // Regular layout for other pages
     return (
         <div className="flex h-screen bg-gray-50">
             <Sidebar />
