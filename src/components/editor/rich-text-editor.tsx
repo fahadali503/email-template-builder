@@ -1,7 +1,6 @@
 'use client'
 
 import { useEditor, EditorContent } from '@tiptap/react'
-import { BubbleMenu } from '@tiptap/extension-bubble-menu'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import TextAlign from '@tiptap/extension-text-align'
@@ -74,12 +73,11 @@ export function RichTextEditor({
                     class: 'max-w-full h-auto',
                 },
             }),
-            BubbleMenu.configure({
-                element: document.createElement('div'),
-            }),
+
         ],
         content,
         editable,
+        immediatelyRender: false,
         onUpdate: ({ editor }) => {
             const html = editor.getHTML()
             onChange?.(html)
@@ -298,11 +296,11 @@ export function RichTextEditor({
                         defaultValue=""
                     >
                         <option value="">Insert Variable</option>
-                        {variables.map((variable) => (
+                        {Array.isArray(variables) ? variables.map((variable) => (
                             <option key={variable.key} value={variable.key}>
                                 {variable.key}
                             </option>
-                        ))}
+                        )) : null}
                     </select>
                 </div>
             </div>

@@ -119,3 +119,306 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Email Builder Specific Styles */
+  .email-builder {
+    @apply bg-gradient-to-br from-slate-50 to-gray-100 h-screen w-full;
+  }
+  
+  /* Ensure full height for nested elements */
+  .email-builder * {
+    box-sizing: border-box;
+  }
+  
+  /* Full height containers */
+  .email-builder-container {
+    @apply h-full w-full flex flex-col;
+  }
+  
+  .email-builder-sidebar {
+    @apply bg-white border-r border-slate-200 shadow-lg shadow-slate-200/50;
+    backdrop-filter: blur(10px);
+  }
+  
+  .email-builder-canvas {
+    @apply bg-white border border-slate-200 rounded-xl shadow-lg shadow-slate-200/30;
+    backdrop-filter: blur(10px);
+  }
+  
+  .email-builder-canvas:hover {
+    @apply border-slate-300 shadow-xl shadow-slate-200/40;
+  }
+  
+  .email-builder-canvas.drop-active {
+    @apply border-blue-400 bg-blue-50/50 shadow-xl shadow-blue-200/30;
+  }
+  
+  .draggable-block {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .draggable-block:hover {
+    @apply shadow-lg shadow-slate-200/50 scale-[1.02];
+  }
+  
+  .draggable-block.selected {
+    @apply ring-2 ring-blue-500/60 shadow-xl shadow-blue-200/30;
+  }
+  
+  .draggable-block.dragging {
+    @apply opacity-60 scale-110 rotate-2 z-50 shadow-2xl shadow-slate-300/50;
+  }
+  
+  .drop-indicator {
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-300 shadow-lg;
+  }
+  
+  .drop-indicator.active {
+    @apply from-blue-600 to-indigo-600 shadow-xl scale-110 animate-pulse;
+  }
+  
+  .block-toolbar {
+    @apply bg-gradient-to-r from-slate-700 to-slate-800 text-white rounded-xl shadow-xl shadow-slate-400/30;
+    backdrop-filter: blur(10px);
+  }
+  
+  .block-toolbar button:hover {
+    @apply bg-white/10 scale-105;
+  }
+  
+  .property-panel {
+    @apply bg-white/95 border-l border-slate-200 shadow-lg shadow-slate-200/30;
+    backdrop-filter: blur(10px);
+  }
+  
+  .email-preview {
+    @apply bg-white shadow-xl shadow-slate-200/40 rounded-xl border border-slate-200;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Grid pattern for canvas */
+  .grid-pattern {
+    background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .email-builder {
+      @apply flex flex-col h-screen;
+    }
+    
+    .email-builder-sidebar {
+      @apply border-r-0 border-t border-gray-200;
+    }
+  }
+  
+  /* Dark mode support */
+  .dark .email-builder {
+    @apply bg-gray-900;
+  }
+  
+  .dark .email-builder-sidebar {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .email-builder-canvas {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .property-panel {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .email-preview {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  /* Professional animations */
+  .slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  .slide-out-right {
+    animation: slideOutRight 0.3s ease-in;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Loading states */
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+  
+  .dark .loading-skeleton {
+    @apply bg-gray-700;
+  }
+  
+  /* Focus states for accessibility */
+  .email-builder *:focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  }
+  
+  /* Text utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  /* Custom scrollbar for blocks panel */
+  .blocks-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .blocks-scroll::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+  }
+  
+  .blocks-scroll::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Smooth scrolling behavior */
+  .blocks-scroll {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+
+  /* Hide scrollbars for horizontal tabs */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Enhanced horizontal scrolling */
+  .horizontal-scroll {
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+  
+  .horizontal-scroll > * {
+    scroll-snap-align: start;
+  }
+
+  /* Horizontal scrollable tabs */
+  .tab-scroll-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tab-scroll-container::before,
+  .tab-scroll-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    z-index: 10;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .tab-scroll-container::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.95), transparent);
+  }
+  
+  .tab-scroll-container::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.95), transparent);
+  }
+  
+  /* Hide fade indicators when at scroll boundaries */
+  .tab-scroll-container.data-scroll-start::before {
+    opacity: 0;
+  }
+  
+  .tab-scroll-container.data-scroll-end::after {
+    opacity: 0;
+  }
+  
+  /* Scroll shadow effects for better UX */
+  .scroll-shadow {
+    background: 
+      linear-gradient(white 30%, transparent),
+      linear-gradient(transparent, white 70%) 0 100%,
+      radial-gradient(50% 0, rgba(0,0,0,.2), transparent),
+      radial-gradient(50% 100%, rgba(0,0,0,.2), transparent) 0 100%;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+    background-attachment: local, local, scroll, scroll;
+  }
+}

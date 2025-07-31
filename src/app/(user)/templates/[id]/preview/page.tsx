@@ -32,13 +32,21 @@ export default function TemplatePreviewPage() {
     useEffect(() => {
         if (template) {
             // Render the template to HTML using react-email
-            const html = render(
-                EmailTemplate({
-                    content: template.content,
-                    variables: template.variables || {}
-                })
-            )
-            setHtmlContent(html)
+            const renderTemplate = async () => {
+                try {
+                    const html = await render(
+                        EmailTemplate({
+                            content: template.content,
+                            variables: template.variables || {}
+                        })
+                    )
+                    setHtmlContent(html)
+                } catch (error) {
+                    console.error('Failed to render email template:', error)
+                    setHtmlContent('<p>Error rendering template</p>')
+                }
+            }
+            renderTemplate()
         }
     }, [template])
 
@@ -200,8 +208,8 @@ export default function TemplatePreviewPage() {
                             <div>
                                 <label className="text-sm font-medium text-gray-700">Status</label>
                                 <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${template.isPublic
-                                        ? 'bg-green-100 text-green-800'
-                                        : 'bg-gray-100 text-gray-800'
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-gray-100 text-gray-800'
                                     }`}>
                                     {template.isPublic ? 'Public' : 'Private'}
                                 </span>

@@ -1,27 +1,83 @@
 'use client'
 
+import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Plus, FileText, Edit3, Eye } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import axios from 'axios'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Template } from '@/types'
+
+const createTemplateSchema = z.object({
+    name: z.string().min(1, 'Template name is required').max(100, 'Template name is too long'),
+    description: z.string().optional(),
+    isPublic: z.boolean().default(false),
+})
+
+type CreateTemplateForm = z.infer<typeof createTemplateSchema>
 
 async function fetchTemplates() {
     const response = await axios.get('/api/templates?limit=5')
     return response.data
 }
 
+async function createTemplate(data: CreateTemplateForm) {
+    const response = await axios.post('/api/templates', {
+        name: data.name,
+        content: '<p>Start writing your email template...</p>',
+        preview: data.description || '',
+        isPublic: data.isPublic,
+        variables: {},
+    })
+    return response.data
+}
+
 export default function DashboardPage() {
     const { data: session } = useSession()
+    const router = useRouter()
+    const queryClient = useQueryClient()
+    const [showCreateModal, setShowCreateModal] = useState(false)
 
-    const { data: templatesData, isLoading } = useQuery({
-        queryKey: ['templates', 'recent'],
-        queryFn: fetchTemplates,
+    const { data: templatesData, isLoading } = useQuery(
+        ['templates', 'recent'],
+        fetchTemplates
+    )
+
+    const createTemplateMutation = useMutation(
+        createTemplate,
+        {
+            onSuccess: (template) => {
+                queryClient.invalidateQueries(['templates'])
+                setShowCreateModal(false)
+                router.push(`/builder/${template.id}`)
+            },
+        }
+    )
+
+    const form = useForm<CreateTemplateForm>({
+        resolver: zodResolver(createTemplateSchema),
+        defaultValues: {
+            name: '',
+            description: '',
+            isPublic: false,
+        },
     })
+
+    const onSubmit = (data: CreateTemplateForm) => {
+        createTemplateMutation.mutate(data)
+    }
 
     const templates = templatesData?.templates || []
 
@@ -47,12 +103,97 @@ export default function DashboardPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Link href="/builder">
-                            <Button className="w-full">
-                                <Plus className="mr-2 h-4 w-4" />
-                                New Template
-                            </Button>
-                        </Link>
+                        <Dialog open={showCreateModal} onOpenChange={(open) => {
+                            setShowCreateModal(open)
+                            if (!open) {
+                                form.reset()
+                            }
+                        }}>
+                            <DialogTrigger asChild>
+                                <Button className="w-full">
+                                    <Plus className="mr-2 h-4 w-4" />
+                                    New Template
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                    <DialogTitle>Create New Template</DialogTitle>
+                                    <DialogDescription>
+                                        Give your email template a name and get started.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <Form {...form}>
+                                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="name"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Template Name</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="e.g., Welcome Email, Newsletter..."
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="description"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Description (Optional)</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea
+                                                            placeholder="Brief description of this template..."
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="isPublic"
+                                            render={({ field }) => (
+                                                <FormItem className="flex items-center space-x-2">
+                                                    <FormControl>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={field.value}
+                                                            onChange={field.onChange}
+                                                            className="rounded"
+                                                        />
+                                                    </FormControl>
+                                                    <FormLabel className="text-sm font-normal">
+                                                        Make this template public
+                                                    </FormLabel>
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <DialogFooter>
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                onClick={() => setShowCreateModal(false)}
+                                            >
+                                                Cancel
+                                            </Button>
+                                            <Button
+                                                type="submit"
+                                                disabled={createTemplateMutation.isLoading}
+                                            >
+                                                {createTemplateMutation.isLoading ? 'Creating...' : 'Create Template'}
+                                            </Button>
+                                        </DialogFooter>
+                                    </form>
+                                </Form>
+                            </DialogContent>
+                        </Dialog>
                     </CardContent>
                 </Card>
 
@@ -174,12 +315,10 @@ export default function DashboardPage() {
                             <p className="text-gray-600 mb-6">
                                 Get started by creating your first email template.
                             </p>
-                            <Link href="/builder">
-                                <Button>
-                                    <Plus className="mr-2 h-4 w-4" />
-                                    Create Template
-                                </Button>
-                            </Link>
+                            <Button onClick={() => setShowCreateModal(true)}>
+                                <Plus className="mr-2 h-4 w-4" />
+                                Create Template
+                            </Button>
                         </CardContent>
                     </Card>
                 )}
