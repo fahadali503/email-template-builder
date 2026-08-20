@@ -1,0 +1,424 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Email Builder Specific Styles */
+  .email-builder {
+    @apply bg-gradient-to-br from-slate-50 to-gray-100 h-screen w-full;
+  }
+  
+  /* Ensure full height for nested elements */
+  .email-builder * {
+    box-sizing: border-box;
+  }
+  
+  /* Full height containers */
+  .email-builder-container {
+    @apply h-full w-full flex flex-col;
+  }
+  
+  .email-builder-sidebar {
+    @apply bg-white border-r border-slate-200 shadow-lg shadow-slate-200/50;
+    backdrop-filter: blur(10px);
+  }
+  
+  .email-builder-canvas {
+    @apply bg-white border border-slate-200 rounded-xl shadow-lg shadow-slate-200/30;
+    backdrop-filter: blur(10px);
+  }
+  
+  .email-builder-canvas:hover {
+    @apply border-slate-300 shadow-xl shadow-slate-200/40;
+  }
+  
+  .email-builder-canvas.drop-active {
+    @apply border-blue-400 bg-blue-50/50 shadow-xl shadow-blue-200/30;
+  }
+  
+  .draggable-block {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .draggable-block:hover {
+    @apply shadow-lg shadow-slate-200/50 scale-[1.02];
+  }
+  
+  .draggable-block.selected {
+    @apply ring-2 ring-blue-500/60 shadow-xl shadow-blue-200/30;
+  }
+  
+  .draggable-block.dragging {
+    @apply opacity-60 scale-110 rotate-2 z-50 shadow-2xl shadow-slate-300/50;
+  }
+  
+  .drop-indicator {
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-300 shadow-lg;
+  }
+  
+  .drop-indicator.active {
+    @apply from-blue-600 to-indigo-600 shadow-xl scale-110 animate-pulse;
+  }
+  
+  .block-toolbar {
+    @apply bg-gradient-to-r from-slate-700 to-slate-800 text-white rounded-xl shadow-xl shadow-slate-400/30;
+    backdrop-filter: blur(10px);
+  }
+  
+  .block-toolbar button:hover {
+    @apply bg-white/10 scale-105;
+  }
+  
+  .property-panel {
+    @apply bg-white/95 border-l border-slate-200 shadow-lg shadow-slate-200/30;
+    backdrop-filter: blur(10px);
+  }
+  
+  .email-preview {
+    @apply bg-white shadow-xl shadow-slate-200/40 rounded-xl border border-slate-200;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Grid pattern for canvas */
+  .grid-pattern {
+    background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .email-builder {
+      @apply flex flex-col h-screen;
+    }
+    
+    .email-builder-sidebar {
+      @apply border-r-0 border-t border-gray-200;
+    }
+  }
+  
+  /* Dark mode support */
+  .dark .email-builder {
+    @apply bg-gray-900;
+  }
+  
+  .dark .email-builder-sidebar {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .email-builder-canvas {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .property-panel {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .email-preview {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  /* Professional animations */
+  .slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  .slide-out-right {
+    animation: slideOutRight 0.3s ease-in;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Loading states */
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+  
+  .dark .loading-skeleton {
+    @apply bg-gray-700;
+  }
+  
+  /* Focus states for accessibility */
+  .email-builder *:focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  }
+  
+  /* Text utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  /* Custom scrollbar for blocks panel */
+  .blocks-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .blocks-scroll::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+  }
+  
+  .blocks-scroll::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Smooth scrolling behavior */
+  .blocks-scroll {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+
+  /* Hide scrollbars for horizontal tabs */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Enhanced horizontal scrolling */
+  .horizontal-scroll {
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+  
+  .horizontal-scroll > * {
+    scroll-snap-align: start;
+  }
+
+  /* Horizontal scrollable tabs */
+  .tab-scroll-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tab-scroll-container::before,
+  .tab-scroll-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    z-index: 10;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .tab-scroll-container::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.95), transparent);
+  }
+  
+  .tab-scroll-container::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.95), transparent);
+  }
+  
+  /* Hide fade indicators when at scroll boundaries */
+  .tab-scroll-container.data-scroll-start::before {
+    opacity: 0;
+  }
+  
+  .tab-scroll-container.data-scroll-end::after {
+    opacity: 0;
+  }
+  
+  /* Scroll shadow effects for better UX */
+  .scroll-shadow {
+    background: 
+      linear-gradient(white 30%, transparent),
+      linear-gradient(transparent, white 70%) 0 100%,
+      radial-gradient(50% 0, rgba(0,0,0,.2), transparent),
+      radial-gradient(50% 100%, rgba(0,0,0,.2), transparent) 0 100%;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
